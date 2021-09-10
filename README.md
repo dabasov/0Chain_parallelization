@@ -95,15 +95,19 @@ for i, tx := range txs{
 	b := buckets[tx.Rank]
 	buckets[tx.Rank] = append(b, tx)
 }
-
-for every bucket in parralel {  
-    tx.Balances = GetNeededState(globalState, tx.Rset, tx.Wset)
-    calculatedStates[I] := calculateState(tx.balances, tx)  //calculate state for each transaction
-    compare(tx.Rset, calculatedStates[I].Rset) //validate execution path
-    compare(tx.Wset, calculatedStates[I].Wset) //validate execution path
-  }
-  MergeState(globalState, calculatedStates…) //if no errors apply partialStates to global and finish execution
+previousState := globalState
+for every rank {
+	for every bucket in parralel {  
+	    tx.Balances = GetNeededState(previousState, tx.Rset, tx.Wset)
+	    calculatedStates[I] := calculateState(tx.balances, tx)  //calculate state for each transaction
+	    compare(tx.Rset, calculatedStates[I].Rset) //validate execution path
+	    compare(tx.Wset, calculatedStates[I].Wset) //validate execution path
+	  }
+	  previousState := MergeState(previousState, calculatedStatesForRank…) //if no errors apply partialStates to global and finish execution
+}
 ```
+
+It is possible to optimize (2) step and instead of grouping transactions in stages, extract independent graphs of transactions. It is not obvious how such an optimization can improve execution time, I leave it for the next steps.   
 
 ## Attack vectors
 1. Malicious proposer can create sets that cause chain split due to ignoring contentions.
