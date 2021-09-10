@@ -110,5 +110,9 @@ for every bucket in parralel {
 Imagine a malicious leader who decides not to include some addresses to R/Wsets, honest validators will execute transactions in parallel with contention. Due to not definitive nature of parallelization, validators can be split in several groups with different states each. 
 Solution: calculate R/Wsets independently for each transaction execution during validation and compare them with given in the block.
 
-
-
+#Related articles
+1. [Vitalik on Easy parallelizability](https://github.com/ethereum/EIPs/issues/648)
+2. [Stan Kladko on Parallelilizing EVM through end-of-the-block virtual transactions](https://ethresear.ch/t/parallelilizing-evm-through-end-of-the-block-virtual-transactions/7787)
+3. [An Empirical Study of Speculative Concurrency in Ethereum
+Smart Contracts](https://arxiv.org/pdf/1901.01376.pdf)
+4. [Models of Distributed Systems](http://lamport.azurewebsites.net/pubs/lamport-chapter.pdf)
